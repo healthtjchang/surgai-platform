@@ -26,96 +26,102 @@ export default function LandingPage() {
   const { user } = useAuth();
   const isEn = locale === 'en';
 
-  const featureColors = ['var(--cyan)', 'var(--violet)', 'var(--emerald)', 'var(--rose)'];
+  const featureColors = ['#06b6d4', '#8b5cf6', '#10b981', '#f43f5e'];
 
   return (
     <div className="dark">
       <Navbar />
 
-      {/* === HERO with Aurora === */}
-      <AuroraBackground className="!h-auto min-h-[90vh] !bg-zinc-900">
+      {/* ════════ HERO with Aurora ════════ */}
+      <AuroraBackground className="!h-auto !bg-zinc-950" showRadialGradient={true}>
         <motion.div
           initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2, duration: 0.8, ease: "easeInOut" }}
-          className="relative flex flex-col items-center justify-center px-4 py-24 lg:py-32 text-center max-w-5xl mx-auto"
+          className="relative flex flex-col items-center justify-center px-5 py-20 md:py-28 lg:py-36 text-center w-full max-w-4xl mx-auto"
         >
-          {/* Badge */}
-          <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ delay: 0.1, duration: 0.5 }}
-            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full text-sm mb-10 border"
-            style={{ background: 'rgba(6,182,212,0.06)', borderColor: 'rgba(6,182,212,0.2)', color: 'var(--cyan-bright)' }}
-          >
-            <span className="w-2 h-2 rounded-full animate-pulse" style={{ background: 'var(--cyan)' }} />
-            AI-Powered Surgical Intelligence
-          </motion.div>
+          {/* Dark scrim behind text for readability */}
+          <div className="absolute inset-0 rounded-3xl" style={{ background: 'radial-gradient(ellipse at center, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.3) 60%, transparent 80%)' }} />
 
-          {/* Title */}
-          <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold mb-6 leading-[1.1] tracking-tight">
-            <span className="gradient-text-glow">{t('landing.hero.title')}</span>
-          </h1>
+          <div className="relative z-10">
+            {/* Badge */}
+            <motion.div
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ delay: 0.1, duration: 0.5 }}
+              className="inline-flex items-center gap-2.5 px-5 py-2 rounded-full text-xs md:text-sm mb-8 md:mb-10"
+              style={{ background: 'rgba(6,182,212,0.15)', border: '1px solid rgba(6,182,212,0.3)', color: '#22d3ee' }}
+            >
+              <span className="w-2 h-2 rounded-full animate-pulse" style={{ background: '#06b6d4' }} />
+              AI-Powered Surgical Intelligence
+            </motion.div>
 
-          <p className="text-xl md:text-2xl mb-4 font-light" style={{ color: 'var(--text-secondary)' }}>
-            {t('landing.hero.subtitle')}
-          </p>
-          <p className="text-base md:text-lg mb-12 max-w-2xl mx-auto leading-relaxed" style={{ color: 'var(--text-tertiary)' }}>
-            {t('landing.hero.description')}
-          </p>
+            {/* Title — pure white, no gradient-clip (that kills readability) */}
+            <h1 className="text-4xl md:text-6xl lg:text-7xl font-extrabold mb-5 md:mb-6 leading-[1.1] tracking-tight text-white drop-shadow-[0_2px_20px_rgba(6,182,212,0.3)]">
+              {t('landing.hero.title')}
+            </h1>
 
-          {/* CTAs */}
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link href={user ? '/dashboard' : '/register'}
-              className="btn-primary px-8 py-4 text-base rounded-xl inline-flex items-center justify-center gap-2 text-lg">
-              <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                <path strokeLinecap="round" strokeLinejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" />
-              </svg>
-              {t('landing.hero.cta')}
-            </Link>
-            <Link href="/knowledge"
-              className="btn-ghost px-8 py-4 text-base rounded-xl inline-flex items-center justify-center gap-2 text-lg">
-              <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                <path strokeLinecap="round" strokeLinejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
-              </svg>
-              {isEn ? 'Explore Knowledge' : '探索知識庫'}
-            </Link>
+            <p className="text-lg md:text-xl lg:text-2xl mb-3 md:mb-4 font-light text-cyan-100">
+              {t('landing.hero.subtitle')}
+            </p>
+            <p className="text-sm md:text-base mb-10 md:mb-12 max-w-xl mx-auto leading-relaxed text-slate-300">
+              {t('landing.hero.description')}
+            </p>
+
+            {/* CTAs */}
+            <div className="flex flex-col sm:flex-row gap-3 md:gap-4 justify-center">
+              <Link href={user ? '/dashboard' : '/register'}
+                className="btn-primary px-7 md:px-8 py-3.5 md:py-4 text-sm md:text-base rounded-xl inline-flex items-center justify-center gap-2">
+                <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" />
+                </svg>
+                {t('landing.hero.cta')}
+              </Link>
+              <Link href="/knowledge"
+                className="px-7 md:px-8 py-3.5 md:py-4 text-sm md:text-base rounded-xl inline-flex items-center justify-center gap-2 text-white font-medium"
+                style={{ background: 'rgba(255,255,255,0.1)', border: '1px solid rgba(255,255,255,0.2)', backdropFilter: 'blur(8px)' }}>
+                <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+                </svg>
+                {isEn ? 'Explore Knowledge' : '探索知識庫'}
+              </Link>
+            </div>
+
+            {/* Stats */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.6, duration: 0.6 }}
+              className="mt-14 md:mt-16 grid grid-cols-2 md:grid-cols-4 gap-5 md:gap-8"
+            >
+              {[
+                { value: '79%', label: t('landing.stats.criminal'), color: '#f43f5e' },
+                { value: '5', label: t('landing.stats.shortage'), color: '#f59e0b' },
+                { value: '51.5', label: t('landing.stats.aging'), color: '#8b5cf6' },
+                { value: '70.4h', label: t('landing.stats.time'), color: '#06b6d4' },
+              ].map((s, i) => (
+                <div key={i} className="text-center px-2 py-3 rounded-xl" style={{ background: 'rgba(0,0,0,0.3)', backdropFilter: 'blur(4px)' }}>
+                  <div className="text-2xl md:text-3xl font-bold mb-1" style={{ color: s.color }}>{s.value}</div>
+                  <div className="text-[10px] md:text-xs leading-tight text-slate-400">{s.label}</div>
+                </div>
+              ))}
+            </motion.div>
           </div>
-
-          {/* Stats row inside hero */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.6, duration: 0.6 }}
-            className="mt-16 grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-10"
-          >
-            {[
-              { value: '79%', label: t('landing.stats.criminal'), color: 'var(--rose)' },
-              { value: '5', label: t('landing.stats.shortage'), color: 'var(--amber)' },
-              { value: '51.5', label: t('landing.stats.aging'), color: 'var(--violet)' },
-              { value: '70.4h', label: t('landing.stats.time'), color: 'var(--cyan)' },
-            ].map((s, i) => (
-              <div key={i} className="text-center">
-                <div className="text-3xl md:text-4xl font-bold stat-number mb-1" style={{ color: s.color }}>{s.value}</div>
-                <div className="text-[11px] md:text-xs leading-tight" style={{ color: 'var(--text-tertiary)' }}>{s.label}</div>
-              </div>
-            ))}
-          </motion.div>
         </motion.div>
       </AuroraBackground>
 
-      {/* === FEATURES === */}
-      <section className="py-24 relative" style={{ background: 'var(--bg-base)' }}>
-        <div className="max-w-7xl mx-auto px-4">
+      {/* ════════ FEATURES ════════ */}
+      <section className="py-20 md:py-24" style={{ background: '#060b18' }}>
+        <div className="max-w-7xl mx-auto px-5">
           <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} transition={{ duration: 0.6 }} viewport={{ once: true }}>
-            <h2 className="text-3xl md:text-4xl font-bold text-center mb-3" style={{ color: 'var(--text-primary)' }}>
+            <h2 className="text-2xl md:text-4xl font-bold text-center mb-2 md:mb-3 text-white">
               {t('landing.features.title')}
             </h2>
-            <p className="text-center mb-16 text-sm" style={{ color: 'var(--text-tertiary)' }}>
+            <p className="text-center mb-12 md:mb-16 text-sm text-slate-400">
               {isEn ? 'Revolutionary features built for surgeons' : '專為外科醫師打造的革命性功能'}
             </p>
           </motion.div>
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-5">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-5">
             {(['autoRecord', 'aiTeaching', 'interactive', 'legal'] as const).map((key, i) => (
               <motion.div
                 key={key}
@@ -123,18 +129,19 @@ export default function LandingPage() {
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ delay: i * 0.1, duration: 0.5 }}
                 viewport={{ once: true }}
-                className="card card-interactive p-7"
+                className="rounded-2xl p-6 md:p-7 transition-all duration-300 hover:-translate-y-1"
+                style={{ background: 'rgba(15,23,42,0.6)', border: '1px solid rgba(148,163,184,0.1)', backdropFilter: 'blur(8px)' }}
               >
-                <div className="w-12 h-12 rounded-xl flex items-center justify-center mb-5"
-                  style={{ background: `${featureColors[i]}12`, border: `1px solid ${featureColors[i]}25` }}>
-                  <svg className="w-6 h-6" style={{ color: featureColors[i] }} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.6}>
+                <div className="w-11 h-11 md:w-12 md:h-12 rounded-xl flex items-center justify-center mb-4 md:mb-5"
+                  style={{ background: `${featureColors[i]}15`, border: `1px solid ${featureColors[i]}30` }}>
+                  <svg className="w-5 h-5 md:w-6 md:h-6" style={{ color: featureColors[i] }} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.6}>
                     <path strokeLinecap="round" strokeLinejoin="round" d={FEATURE_ICONS[i]} />
                   </svg>
                 </div>
-                <h3 className="text-base font-semibold mb-2" style={{ color: 'var(--text-primary)' }}>
+                <h3 className="text-sm md:text-base font-semibold mb-2 text-white">
                   {t(`landing.features.${key}.title`)}
                 </h3>
-                <p className="text-sm leading-relaxed" style={{ color: 'var(--text-tertiary)' }}>
+                <p className="text-xs md:text-sm leading-relaxed text-slate-400">
                   {t(`landing.features.${key}.desc`)}
                 </p>
               </motion.div>
@@ -143,64 +150,64 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* === WORKFLOW === */}
-      <section className="py-24" style={{ background: 'var(--bg-elevated)' }}>
-        <div className="max-w-7xl mx-auto px-4">
-          <h2 className="text-3xl md:text-4xl font-bold text-center mb-3" style={{ color: 'var(--text-primary)' }}>
+      {/* ════════ WORKFLOW ════════ */}
+      <section className="py-20 md:py-24" style={{ background: '#0a1020' }}>
+        <div className="max-w-7xl mx-auto px-5">
+          <h2 className="text-2xl md:text-4xl font-bold text-center mb-2 md:mb-3 text-white">
             {isEn ? 'How It Works' : '運作流程'}
           </h2>
-          <p className="text-center mb-16 text-sm" style={{ color: 'var(--text-tertiary)' }}>
+          <p className="text-center mb-12 md:mb-16 text-sm text-slate-400">
             {isEn ? 'From recording to learning, fully automated by AI' : '從手術錄影到教學資源，全程 AI 自動處理'}
           </p>
-          <div className="grid md:grid-cols-4 gap-8">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8">
             {[
-              { step: '01', title: isEn ? 'Upload' : '上傳影片', desc: isEn ? 'Upload video or sync from AI glasses' : '上傳手術錄影或從 AI 眼鏡同步' },
-              { step: '02', title: isEn ? 'AI Process' : 'AI 處理', desc: isEn ? 'Auto transcribe, segment, annotate' : '語音轉文字、自動分段、標註' },
-              { step: '03', title: isEn ? 'Review' : '醫師審閱', desc: isEn ? '5-min review and correct' : '5 分鐘內完成審閱和修正' },
-              { step: '04', title: isEn ? 'Learn' : '學員學習', desc: isEn ? 'Interactive playback + AI Q&A' : '互動式播放、AI 問答、技能追蹤' },
+              { step: '01', title: isEn ? 'Upload' : '上傳影片', desc: isEn ? 'Upload or sync from AI glasses' : '上傳錄影或從 AI 眼鏡同步' },
+              { step: '02', title: isEn ? 'AI Process' : 'AI 處理', desc: isEn ? 'Auto transcribe & annotate' : '語音轉文字、自動標註' },
+              { step: '03', title: isEn ? 'Review' : '醫師審閱', desc: isEn ? '5-min review and correct' : '5 分鐘審閱修正' },
+              { step: '04', title: isEn ? 'Learn' : '學員學習', desc: isEn ? 'Interactive AI Q&A' : '互動播放、AI 問答' },
             ].map((item, i) => (
               <motion.div
                 key={i}
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                transition={{ delay: i * 0.15, duration: 0.5 }}
+                transition={{ delay: i * 0.12, duration: 0.5 }}
                 viewport={{ once: true }}
-                className="text-center relative"
+                className="text-center"
               >
-                {i < 3 && <div className="hidden md:block absolute top-6 left-[60%] w-[80%] h-px" style={{ background: 'linear-gradient(90deg, var(--border-bright), transparent)' }} />}
-                <div className="w-12 h-12 rounded-xl flex items-center justify-center mx-auto mb-4 relative z-10"
-                  style={{ background: 'rgba(6,182,212,0.08)', border: '1px solid rgba(6,182,212,0.2)' }}>
-                  <svg className="w-6 h-6" style={{ color: 'var(--cyan)' }} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.6}>
+                <div className="w-11 h-11 md:w-12 md:h-12 rounded-xl flex items-center justify-center mx-auto mb-3 md:mb-4"
+                  style={{ background: 'rgba(6,182,212,0.1)', border: '1px solid rgba(6,182,212,0.25)' }}>
+                  <svg className="w-5 h-5 md:w-6 md:h-6" style={{ color: '#06b6d4' }} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.6}>
                     <path strokeLinecap="round" strokeLinejoin="round" d={STEP_ICONS[i]} />
                   </svg>
                 </div>
-                <div className="text-[10px] font-mono mb-2 tracking-widest" style={{ color: 'var(--cyan)' }}>STEP {item.step}</div>
-                <h3 className="font-semibold mb-2" style={{ color: 'var(--text-primary)' }}>{item.title}</h3>
-                <p className="text-sm" style={{ color: 'var(--text-tertiary)' }}>{item.desc}</p>
+                <div className="text-[10px] font-mono mb-1.5 tracking-widest text-cyan-400">STEP {item.step}</div>
+                <h3 className="font-semibold mb-1.5 text-sm md:text-base text-white">{item.title}</h3>
+                <p className="text-xs md:text-sm text-slate-400">{item.desc}</p>
               </motion.div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* === CTA === */}
-      <section className="py-28 relative overflow-hidden" style={{ background: 'var(--bg-base)' }}>
-        <div className="glow-orb glow-orb-cyan" style={{ width: 500, height: 500, top: -200, left: '30%', position: 'absolute', opacity: 0.08 }} />
+      {/* ════════ CTA ════════ */}
+      <section className="py-20 md:py-28 relative overflow-hidden" style={{ background: '#060b18' }}>
+        <div className="absolute inset-0" style={{ background: 'radial-gradient(ellipse at 50% 50%, rgba(6,182,212,0.06) 0%, transparent 70%)' }} />
         <motion.div
           initial={{ opacity: 0, scale: 0.95 }}
           whileInView={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.6 }}
           viewport={{ once: true }}
-          className="max-w-3xl mx-auto px-4 text-center relative"
+          className="max-w-2xl mx-auto px-5 text-center relative"
         >
-          <h2 className="text-3xl lg:text-5xl font-bold mb-5">
-            <span className="gradient-text">{isEn ? 'Start Using SurgAI' : '開始使用 SurgAI'}</span>
+          <h2 className="text-2xl md:text-4xl lg:text-5xl font-bold mb-4 md:mb-5 text-white">
+            {isEn ? 'Start Using ' : '開始使用 '}
+            <span className="text-cyan-400">SurgAI</span>
           </h2>
-          <p className="text-base md:text-lg mb-10 leading-relaxed" style={{ color: 'var(--text-tertiary)' }}>
-            {isEn ? 'Every surgery is a valuable teaching resource. Let AI record, organize, and share — automatically.' : '每一台手術都是寶貴的教學資源。讓 AI 幫你自動記錄、整理、分享。'}
+          <p className="text-sm md:text-base mb-8 md:mb-10 leading-relaxed text-slate-400">
+            {isEn ? 'Every surgery is a valuable teaching resource. Let AI record, organize, and share.' : '每一台手術都是寶貴的教學資源。讓 AI 幫你自動記錄、整理、分享。'}
           </p>
           <Link href={user ? '/dashboard' : '/register'}
-            className="btn-primary px-10 py-4 text-lg rounded-xl inline-flex items-center gap-2">
+            className="btn-primary px-8 md:px-10 py-3.5 md:py-4 text-sm md:text-lg rounded-xl inline-flex items-center gap-2">
             <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
               <path strokeLinecap="round" strokeLinejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" />
             </svg>
@@ -209,19 +216,19 @@ export default function LandingPage() {
         </motion.div>
       </section>
 
-      {/* === FOOTER === */}
-      <footer className="py-12" style={{ borderTop: '1px solid var(--border)', background: 'var(--bg-base)' }}>
-        <div className="max-w-7xl mx-auto px-4 text-center">
+      {/* ════════ FOOTER ════════ */}
+      <footer className="py-10 md:py-12" style={{ borderTop: '1px solid rgba(148,163,184,0.1)', background: '#060b18' }}>
+        <div className="max-w-7xl mx-auto px-5 text-center">
           <div className="flex items-center justify-center gap-2 mb-3">
-            <div className="w-7 h-7 rounded-lg flex items-center justify-center" style={{ background: 'linear-gradient(135deg, var(--cyan), var(--blue))' }}>
+            <div className="w-7 h-7 rounded-lg flex items-center justify-center" style={{ background: 'linear-gradient(135deg, #06b6d4, #3b82f6)' }}>
               <svg className="w-4 h-4 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.2}>
                 <path strokeLinecap="round" strokeLinejoin="round" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" />
               </svg>
             </div>
-            <span className="font-bold" style={{ color: 'var(--text-primary)' }}>Surg<span style={{ color: 'var(--cyan-bright)' }}>AI</span></span>
+            <span className="font-bold text-white">Surg<span className="text-cyan-400">AI</span></span>
           </div>
-          <p className="text-xs" style={{ color: 'var(--text-tertiary)' }}>AI-Powered Surgical Video Intelligence Platform</p>
-          <p className="text-xs mt-3" style={{ color: 'var(--text-tertiary)', opacity: 0.5 }}>&copy; 2026 SurgAI. All rights reserved.</p>
+          <p className="text-xs text-slate-500">AI-Powered Surgical Video Intelligence Platform</p>
+          <p className="text-xs mt-2 text-slate-600">&copy; 2026 SurgAI. All rights reserved.</p>
         </div>
       </footer>
     </div>

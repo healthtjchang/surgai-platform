@@ -1,0 +1,14 @@
+{
+  "name": "SurgAI 外科智慧教學平台",
+  "short_name": "SurgAI",
+  "description": "AI-Powered Surgical Video Recording & Learning Platform",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#060b18",
+  "theme_color": "#06b6d4",
+  "orientation": "any",
+  "icons": [
+    { "src": "/icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "/icon-512.png", "sizes": "512x512", "type": "image/png" }
+  ]
+}

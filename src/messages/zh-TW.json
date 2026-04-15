@@ -1,0 +1,172 @@
+{
+  "common": {
+    "appName": "SurgAI 外科智慧教學平台",
+    "tagline": "AI 驅動的手術影像記錄與學習系統",
+    "login": "登入",
+    "register": "註冊",
+    "logout": "登出",
+    "dashboard": "儀表板",
+    "videos": "手術影片",
+    "upload": "上傳影片",
+    "search": "搜尋",
+    "settings": "設定",
+    "save": "儲存",
+    "cancel": "取消",
+    "delete": "刪除",
+    "edit": "編輯",
+    "loading": "載入中...",
+    "processing": "處理中...",
+    "error": "發生錯誤",
+    "success": "操作成功",
+    "confirm": "確認",
+    "back": "返回",
+    "next": "下一步",
+    "submit": "提交",
+    "language": "語言"
+  },
+  "landing": {
+    "hero": {
+      "title": "AI 外科眼鏡",
+      "subtitle": "手術影像智慧記錄學習平台",
+      "description": "讓每一台手術自動成為高品質教學資源。AI 自動轉譯、分段、標註、生成教案——醫師零負擔，學員隨時學。",
+      "cta": "開始使用",
+      "demo": "觀看展示"
+    },
+    "features": {
+      "title": "為什麼選擇 SurgAI？",
+      "autoRecord": {
+        "title": "零負擔自動記錄",
+        "desc": "戴上 AI 眼鏡，手術自動錄影。無需額外操作，不影響手術流程。"
+      },
+      "aiTeaching": {
+        "title": "AI 自動教案生成",
+        "desc": "術後 30 分鐘內自動產出教案：摘要、步驟分解、關鍵時刻標記。醫師只需 5 分鐘審閱。"
+      },
+      "interactive": {
+        "title": "互動式 AI 學習",
+        "desc": "學員可隨時暫停影片提問，AI 教學助手根據影片內容即時回答。"
+      },
+      "legal": {
+        "title": "法律保護傘",
+        "desc": "完整的手術影像記錄是最有力的醫療訴訟防護證據。"
+      }
+    },
+    "painPoints": {
+      "title": "外科醫師的痛點",
+      "time": "傳統教案製作需要 20+ 小時",
+      "quality": "手持錄影品質差、晃動嚴重",
+      "adoption": "錄影流程繁瑣，沒人記得錄",
+      "access": "教學資源無法被搜尋和互動"
+    },
+    "stats": {
+      "title": "台灣外科現況",
+      "criminal": "79% 醫療訴訟為刑事案件",
+      "shortage": "五大皆空——外科人力斷崖",
+      "aging": "醫師平均年齡 51.5 歲",
+      "time": "學術外科醫師週工時 70.4 小時"
+    }
+  },
+  "auth": {
+    "loginTitle": "登入 SurgAI",
+    "registerTitle": "建立帳號",
+    "email": "電子郵件",
+    "password": "密碼",
+    "name": "姓名",
+    "role": "身份",
+    "surgeon": "主刀醫師",
+    "trainee": "學員",
+    "loginButton": "登入",
+    "registerButton": "註冊",
+    "noAccount": "還沒有帳號？",
+    "hasAccount": "已有帳號？",
+    "demoAccount": "Demo 帳號：surgeon@demo.com / demo123"
+  },
+  "dashboard": {
+    "welcome": "歡迎回來",
+    "totalVideos": "影片總數",
+    "processed": "已處理",
+    "pendingProcess": "待處理",
+    "totalLearningTime": "學習時數",
+    "recentVideos": "最近影片",
+    "quickActions": "快速操作",
+    "uploadNew": "上傳新影片",
+    "browseVideos": "瀏覽影片庫",
+    "myNotes": "我的筆記"
+  },
+  "video": {
+    "upload": {
+      "title": "上傳手術影片",
+      "dragDrop": "拖放影片檔案至此，或點擊選擇",
+      "supported": "支援格式：MP4, MOV, WebM",
+      "videoTitle": "影片標題",
+      "surgeryType": "手術類型",
+      "difficulty": "難度等級",
+      "description": "影片描述",
+      "uploadButton": "開始上傳",
+      "uploading": "上傳中..."
+    },
+    "list": {
+      "title": "手術影片庫",
+      "empty": "尚無影片，請上傳您的第一部手術影片",
+      "filter": "篩選",
+      "sort": "排序",
+      "all": "全部",
+      "byDate": "依日期",
+      "byType": "依術式"
+    },
+    "detail": {
+      "chapters": "章節",
+      "transcript": "逐字稿",
+      "teaching": "教案",
+      "notes": "筆記",
+      "aiChat": "AI 助手",
+      "keyMoments": "關鍵時刻",
+      "steps": "手術步驟",
+      "summary": "手術摘要",
+      "askAI": "問 AI 助手...",
+      "addNote": "新增筆記...",
+      "speed": "播放速度"
+    },
+    "status": {
+      "pending": "待處理",
+      "processing": "AI 處理中",
+      "completed": "已完成",
+      "failed": "處理失敗"
+    },
+    "surgeryTypes": {
+      "laparoscopic_cholecystectomy": "腹腔鏡膽囊切除術",
+      "appendectomy": "闌尾切除術",
+      "hernia_repair": "疝氣修補術",
+      "thyroidectomy": "甲狀腺切除術",
+      "colectomy": "結腸切除術",
+      "gastrectomy": "胃切除術",
+      "other": "其他"
+    },
+    "difficulties": {
+      "beginner": "初級",
+      "intermediate": "中級",
+      "advanced": "進階",
+      "expert": "專家級"
+    }
+  },
+  "search": {
+    "title": "搜尋手術教學資源",
+    "placeholder": "搜尋手術類型、解剖結構、技巧...",
+    "noResults": "未找到相關結果",
+    "results": "搜尋結果",
+    "filters": "篩選條件"
+  },
+  "chat": {
+    "title": "AI 教學助手",
+    "placeholder": "請輸入您的問題...",
+    "send": "傳送",
+    "thinking": "思考中...",
+    "welcome": "您好！我是 SurgAI 教學助手。關於這部手術影片，您有什麼想問的嗎？",
+    "examples": {
+      "anatomy": "這個結構是什麼？",
+      "technique": "這個步驟的技巧要點是什麼？",
+      "safety": "這個步驟需要注意哪些安全事項？",
+      "comparison": "有沒有替代的手術方式？"
+    }
+  }
+}

@@ -1,0 +1,172 @@
+{
+  "common": {
+    "appName": "SurgAI Surgical Teaching Platform",
+    "tagline": "AI-Powered Surgical Video Recording & Learning System",
+    "login": "Log In",
+    "register": "Sign Up",
+    "logout": "Log Out",
+    "dashboard": "Dashboard",
+    "videos": "Videos",
+    "upload": "Upload",
+    "search": "Search",
+    "settings": "Settings",
+    "save": "Save",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "edit": "Edit",
+    "loading": "Loading...",
+    "processing": "Processing...",
+    "error": "An error occurred",
+    "success": "Success",
+    "confirm": "Confirm",
+    "back": "Back",
+    "next": "Next",
+    "submit": "Submit",
+    "language": "Language"
+  },
+  "landing": {
+    "hero": {
+      "title": "AI Surgical Glasses",
+      "subtitle": "Intelligent Surgical Video Learning Platform",
+      "description": "Turn every surgery into a high-quality teaching resource. AI automatically transcribes, segments, annotates, and generates lesson plans — zero burden for surgeons, anytime learning for trainees.",
+      "cta": "Get Started",
+      "demo": "Watch Demo"
+    },
+    "features": {
+      "title": "Why SurgAI?",
+      "autoRecord": {
+        "title": "Zero-Burden Auto Recording",
+        "desc": "Put on AI glasses, surgery records automatically. No extra steps, no workflow disruption."
+      },
+      "aiTeaching": {
+        "title": "AI Auto Lesson Generation",
+        "desc": "Teaching materials generated within 30 minutes post-op: summaries, step breakdowns, key moment markers. Surgeons review in just 5 minutes."
+      },
+      "interactive": {
+        "title": "Interactive AI Learning",
+        "desc": "Trainees can pause and ask questions anytime. AI teaching assistant answers based on video content instantly."
+      },
+      "legal": {
+        "title": "Legal Protection Shield",
+        "desc": "Complete surgical video records serve as the strongest evidence for malpractice defense."
+      }
+    },
+    "painPoints": {
+      "title": "Surgeon Pain Points",
+      "time": "Traditional lesson creation takes 20+ hours",
+      "quality": "Handheld recordings have poor, shaky quality",
+      "adoption": "Recording workflows are cumbersome, nobody remembers",
+      "access": "Teaching resources can't be searched or interacted with"
+    },
+    "stats": {
+      "title": "Taiwan Surgery Crisis",
+      "criminal": "79% of malpractice suits are criminal cases",
+      "shortage": "Critical surgeon shortage across 5 major specialties",
+      "aging": "Average physician age: 51.5 years",
+      "time": "Academic surgeons work 70.4 hours/week"
+    }
+  },
+  "auth": {
+    "loginTitle": "Log In to SurgAI",
+    "registerTitle": "Create Account",
+    "email": "Email",
+    "password": "Password",
+    "name": "Full Name",
+    "role": "Role",
+    "surgeon": "Surgeon",
+    "trainee": "Trainee",
+    "loginButton": "Log In",
+    "registerButton": "Sign Up",
+    "noAccount": "Don't have an account?",
+    "hasAccount": "Already have an account?",
+    "demoAccount": "Demo account: surgeon@demo.com / demo123"
+  },
+  "dashboard": {
+    "welcome": "Welcome back",
+    "totalVideos": "Total Videos",
+    "processed": "Processed",
+    "pendingProcess": "Pending",
+    "totalLearningTime": "Learning Hours",
+    "recentVideos": "Recent Videos",
+    "quickActions": "Quick Actions",
+    "uploadNew": "Upload New Video",
+    "browseVideos": "Browse Videos",
+    "myNotes": "My Notes"
+  },
+  "video": {
+    "upload": {
+      "title": "Upload Surgical Video",
+      "dragDrop": "Drag & drop video file here, or click to select",
+      "supported": "Supported formats: MP4, MOV, WebM",
+      "videoTitle": "Video Title",
+      "surgeryType": "Surgery Type",
+      "difficulty": "Difficulty Level",
+      "description": "Description",
+      "uploadButton": "Start Upload",
+      "uploading": "Uploading..."
+    },
+    "list": {
+      "title": "Surgical Video Library",
+      "empty": "No videos yet. Upload your first surgical video.",
+      "filter": "Filter",
+      "sort": "Sort",
+      "all": "All",
+      "byDate": "By Date",
+      "byType": "By Type"
+    },
+    "detail": {
+      "chapters": "Chapters",
+      "transcript": "Transcript",
+      "teaching": "Teaching",
+      "notes": "Notes",
+      "aiChat": "AI Assistant",
+      "keyMoments": "Key Moments",
+      "steps": "Surgical Steps",
+      "summary": "Surgery Summary",
+      "askAI": "Ask AI Assistant...",
+      "addNote": "Add note...",
+      "speed": "Playback Speed"
+    },
+    "status": {
+      "pending": "Pending",
+      "processing": "AI Processing",
+      "completed": "Completed",
+      "failed": "Failed"
+    },
+    "surgeryTypes": {
+      "laparoscopic_cholecystectomy": "Laparoscopic Cholecystectomy",
+      "appendectomy": "Appendectomy",
+      "hernia_repair": "Hernia Repair",
+      "thyroidectomy": "Thyroidectomy",
+      "colectomy": "Colectomy",
+      "gastrectomy": "Gastrectomy",
+      "other": "Other"
+    },
+    "difficulties": {
+      "beginner": "Beginner",
+      "intermediate": "Intermediate",
+      "advanced": "Advanced",
+      "expert": "Expert"
+    }
+  },
+  "search": {
+    "title": "Search Surgical Teaching Resources",
+    "placeholder": "Search surgery types, anatomy, techniques...",
+    "noResults": "No results found",
+    "results": "Search Results",
+    "filters": "Filters"
+  },
+  "chat": {
+    "title": "AI Teaching Assistant",
+    "placeholder": "Type your question...",
+    "send": "Send",
+    "thinking": "Thinking...",
+    "welcome": "Hello! I'm the SurgAI teaching assistant. What would you like to know about this surgical video?",
+    "examples": {
+      "anatomy": "What is this structure?",
+      "technique": "What are the key techniques for this step?",
+      "safety": "What safety considerations apply here?",
+      "comparison": "Are there alternative surgical approaches?"
+    }
+  }
+}

@@ -4,6 +4,7 @@ import { useEffect, useState, useRef, use, useCallback } from 'react';
 import { useAuth } from '@/lib/auth-context';
 import { useLocale } from '@/lib/locale-context';
 import Navbar from '@/components/layout/Navbar';
+import TeachingTools from '@/components/video-player/TeachingTools';
 import Link from 'next/link';
 
 interface Transcript { id: string; start_time: number; end_time: number; text: string; }
@@ -13,7 +14,7 @@ interface Annotation { id: string; timestamp: number; type: string; label: strin
 interface ChatMessage { role: 'user' | 'assistant'; content: string; }
 interface Correction { id: string; original_text: string; corrected_text: string; applied_count: number; is_auto_rule: number; }
 
-type TabType = 'chapters' | 'transcript' | 'teaching' | 'corrections' | 'chat';
+type TabType = 'chapters' | 'transcript' | 'teaching' | 'corrections' | 'tools' | 'chat';
 
 export default function VideoDetailPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = use(params);
@@ -34,6 +35,9 @@ export default function VideoDetailPage({ params }: { params: Promise<{ id: stri
   const [editingId, setEditingId] = useState<string | null>(null);
   const [editText, setEditText] = useState('');
   const [savingId, setSavingId] = useState<string | null>(null);
+
+  // Annotation state
+  const [annotateActive, setAnnotateActive] = useState(false);
 
   // Batch correction state
   const [corrections, setCorrections] = useState<Correction[]>([]);
@@ -164,15 +168,16 @@ export default function VideoDetailPage({ params }: { params: Promise<{ id: stri
   if (!video) return <div className="min-h-screen" style={{ background: "var(--bg-base)" }}><Navbar /><div className="flex items-center justify-center py-20"><p className="text-[var(--text-tertiary)]">{t('common.loading')}</p></div></div>;
 
   const tabs: TabType[] = isSurgeon
-    ? ['chapters', 'transcript', 'corrections', 'teaching', 'chat']
+    ? ['chapters', 'transcript', 'corrections', 'tools', 'chat']
     : ['chapters', 'transcript', 'teaching', 'chat'];
 
   const tabLabels: Record<TabType, string> = {
     chapters: isEn ? 'Chapters' : '章節',
-    transcript: isEn ? 'Transcript' : '逐字稿',
+    transcript: isEn ? 'Script' : '逐字稿',
     corrections: isEn ? 'Correct' : '校正',
     teaching: isEn ? 'Teaching' : '教案',
-    chat: isEn ? 'AI Chat' : 'AI 助手',
+    tools: isEn ? 'Tools' : '工具',
+    chat: isEn ? 'AI' : 'AI',
   };
 
   return (
@@ -409,6 +414,17 @@ export default function VideoDetailPage({ params }: { params: Promise<{ id: stri
                     );
                   })}
                 </div>
+              )}
+
+              {/* === TOOLS === */}
+              {activeTab === 'tools' && (
+                <TeachingTools
+                  videoId={id}
+                  videoTitle={video.title as string}
+                  isEn={isEn}
+                  onAnnotateToggle={() => setAnnotateActive(!annotateActive)}
+                  annotateActive={annotateActive}
+                />
               )}
 
               {/* === AI CHAT === */}

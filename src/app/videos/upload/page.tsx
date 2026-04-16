@@ -60,7 +60,10 @@ export default function UploadPage() {
 
       setProgress(30);
       const res = await fetch('/api/videos', { method: 'POST', body: formData });
-      if (!res.ok) throw new Error('Upload failed');
+      if (!res.ok) {
+        const errData = await res.json().catch(() => ({}));
+        throw new Error(errData.error || `Upload failed (${res.status})`);
+      }
       const data = await res.json();
       setProgress(60);
 

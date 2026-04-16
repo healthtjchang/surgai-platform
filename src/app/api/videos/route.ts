@@ -2,6 +2,8 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getCurrentUser } from '@/lib/auth';
 import getDb, { randomUUID } from '@/lib/db';
 import { writeFile, mkdir } from 'fs/promises';
+import { createWriteStream } from 'fs';
+import { Readable } from 'stream';
 import path from 'path';
 
 export async function GET(request: NextRequest) {
@@ -65,8 +67,43 @@ export async function POST(request: NextRequest) {
     await mkdir(uploadDir, { recursive: true });
     const filePath = path.join(uploadDir, fileName);
 
-    const bytes = await file.arrayBuffer();
-    await writeFile(filePath, Buffer.from(bytes));
+    // Stream write to avoid loading entire file into memory
+    try {
+      const stream = file.stream();
+      const writeStream = createWriteStream(filePath);
+      const reader = stream.getReader();
+
+      await new Promise<void>((resolve, reject) => {
+        writeStream.on('error', reject);
+        writeStream.on('finish', resolve);
+
+        function pump(): void {
+          reader.read().then(({ done, value }) => {
+            if (done) {
+              writeStream.end();
+              return;
+            }
+            const canContinue = writeStream.write(Buffer.from(value));
+            if (canContinue) {
+              pump();
+            } else {
+              writeStream.once('drain', pump);
+            }
+          }).catch(reject);
+        }
+        pump();
+      });
+    } catch (writeError) {
+      console.error('File write error:', writeError);
+      // Fallback: try buffer approach for smaller files
+      try {
+        const bytes = await file.arrayBuffer();
+        await writeFile(filePath, Buffer.from(bytes));
+      } catch (fallbackError) {
+        console.error('Fallback write also failed:', fallbackError);
+        return NextResponse.json({ error: '影片儲存失敗，請確認伺服器有足夠的磁碟空間' }, { status: 500 });
+      }
+    }
 
     const db = getDb();
     db.prepare(`
@@ -77,6 +114,6 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ video: { id, title, processing_status: 'pending' } });
   } catch (error) {
     console.error('Upload error:', error);
-    return NextResponse.json({ error: 'Upload failed' }, { status: 500 });
+    return NextResponse.json({ error: '上傳失敗，請重試' }, { status: 500 });
   }
 }

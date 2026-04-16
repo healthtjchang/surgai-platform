@@ -5,6 +5,7 @@ import { useAuth } from '@/lib/auth-context';
 import { useLocale } from '@/lib/locale-context';
 import Navbar from '@/components/layout/Navbar';
 import TeachingTools from '@/components/video-player/TeachingTools';
+import AnnotationCanvas from '@/components/video-player/AnnotationCanvas';
 import Link from 'next/link';
 
 interface Transcript { id: string; start_time: number; end_time: number; text: string; }
@@ -38,6 +39,9 @@ export default function VideoDetailPage({ params }: { params: Promise<{ id: stri
 
   // Annotation state
   const [annotateActive, setAnnotateActive] = useState(false);
+  const [videoAnnotations, setVideoAnnotations] = useState<Array<{ id: string; type: 'arrow' | 'circle' | 'text'; points: Array<{ x: number; y: number }>; label: string; color: string; timestamp: number }>>([]);
+  const videoContainerRef = useRef<HTMLDivElement>(null);
+  const [videoDimensions, setVideoDimensions] = useState({ w: 800, h: 450 });
 
   // Batch correction state
   const [corrections, setCorrections] = useState<Correction[]>([]);
@@ -193,12 +197,31 @@ export default function VideoDetailPage({ params }: { params: Promise<{ id: stri
         <div className="grid lg:grid-cols-3 gap-6">
           {/* Video Player Column */}
           <div className="lg:col-span-2 space-y-4">
-            <div className="bg-black rounded-xl overflow-hidden relative">
+            <div ref={videoContainerRef} className="bg-black rounded-xl overflow-hidden relative">
               <video ref={videoRef} src={video.file_path as string} controls className="w-full aspect-video"
-                onTimeUpdate={() => setCurrentTime(videoRef.current?.currentTime || 0)} />
-              {activeTranscript && (
+                onTimeUpdate={() => setCurrentTime(videoRef.current?.currentTime || 0)}
+                onLoadedMetadata={() => {
+                  if (videoContainerRef.current) {
+                    setVideoDimensions({ w: videoContainerRef.current.offsetWidth, h: videoContainerRef.current.offsetHeight });
+                  }
+                }} />
+              <AnnotationCanvas
+                width={videoDimensions.w}
+                height={videoDimensions.h}
+                currentTime={currentTime}
+                annotations={videoAnnotations}
+                onAdd={(ann) => setVideoAnnotations(prev => [...prev, { ...ann, id: Date.now().toString() }])}
+                active={annotateActive}
+              />
+              {activeTranscript && !annotateActive && (
                 <div className="absolute bottom-16 left-0 right-0 text-center pointer-events-none">
                   <span className="bg-black/70 text-white text-sm px-4 py-2 rounded-lg">{activeTranscript.text}</span>
+                </div>
+              )}
+              {annotateActive && (
+                <div className="absolute bottom-2 left-1/2 -translate-x-1/2 px-3 py-1.5 rounded-lg text-xs font-medium z-20"
+                  style={{ background: 'rgba(6,182,212,0.9)', color: 'white' }}>
+                  {locale === 'en' ? 'Annotation Mode ON — draw on video' : '標註模式開啟中 — 在影片上繪製'}
                 </div>
               )}
             </div>
@@ -447,8 +470,9 @@ export default function VideoDetailPage({ params }: { params: Promise<{ id: stri
                     )}
                     {messages.map((msg, i) => (
                       <div key={i} className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
-                        <div className={`max-w-[85%] p-3 rounded-xl text-sm ${msg.role === 'user' ? 'btn-primary' : 'bg-gray-100 text-[var(--text-primary)]'}`}>
-                          <div className="whitespace-pre-wrap">{msg.content}</div>
+                        <div className={`max-w-[85%] p-3 rounded-xl text-sm ${msg.role === 'user' ? 'btn-primary text-white' : ''}`}
+                          style={msg.role === 'assistant' ? { background: 'rgba(148,163,184,0.1)', color: '#e2e8f0', border: '1px solid rgba(148,163,184,0.1)' } : {}}>
+                          <div className="whitespace-pre-wrap leading-relaxed">{msg.content}</div>
                         </div>
                       </div>
                     ))}

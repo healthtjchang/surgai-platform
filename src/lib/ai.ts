@@ -134,24 +134,38 @@ export async function transcribeWithWhisper(audioPath: string): Promise<Array<{
   // If OpenAI API key is available, use Whisper API
   // Otherwise, return mock transcription for demo
   if (process.env.OPENAI_API_KEY) {
-    const { default: OpenAI } = await import('openai');
-    const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
-    const fs = await import('fs');
+    try {
+      const { default: OpenAI } = await import('openai');
+      const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
+      const fs = await import('fs');
 
-    const response = await openai.audio.transcriptions.create({
-      file: fs.createReadStream(audioPath),
-      model: 'whisper-1',
-      response_format: 'verbose_json',
-      timestamp_granularities: ['segment'],
-      language: 'zh',
-    });
+      // Check if file is large enough to be a real audio/video file (>1KB)
+      const stats = fs.statSync(audioPath);
+      if (stats.size < 1024) {
+        console.log('File too small for Whisper, using demo transcription');
+        // Fall through to demo
+      } else {
+        const response = await openai.audio.transcriptions.create({
+          file: fs.createReadStream(audioPath),
+          model: 'whisper-1',
+          response_format: 'verbose_json',
+          timestamp_granularities: ['segment'],
+          language: 'zh',
+        });
 
-    const segments = (response as unknown as { segments?: Array<{ start: number; end: number; text: string }> }).segments;
-    return (segments || []).map((seg) => ({
-      start: seg.start,
-      end: seg.end,
-      text: seg.text
-    }));
+        const segments = (response as unknown as { segments?: Array<{ start: number; end: number; text: string }> }).segments;
+        if (segments && segments.length > 0) {
+          return segments.map((seg) => ({
+            start: seg.start,
+            end: seg.end,
+            text: seg.text
+          }));
+        }
+      }
+    } catch (whisperError) {
+      console.error('Whisper transcription failed, falling back to demo:', (whisperError as Error).message);
+      // Fall through to demo transcription
+    }
   }
 
   // Demo transcription for testing without API key

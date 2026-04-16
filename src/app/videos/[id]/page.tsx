@@ -468,14 +468,35 @@ export default function VideoDetailPage({ params }: { params: Promise<{ id: stri
                         </div>
                       </div>
                     )}
-                    {messages.map((msg, i) => (
-                      <div key={i} className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
-                        <div className={`max-w-[85%] p-3 rounded-xl text-sm ${msg.role === 'user' ? 'btn-primary text-white' : ''}`}
-                          style={msg.role === 'assistant' ? { background: 'rgba(148,163,184,0.1)', color: '#e2e8f0', border: '1px solid rgba(148,163,184,0.1)' } : {}}>
-                          <div className="whitespace-pre-wrap leading-relaxed">{msg.content.replace(/#{1,6}\s?/g, '').replace(/\*\*/g, '').replace(/\*/g, '').replace(/^>\s?/gm, '').replace(/^-\s/gm, '  \u2022 ')}</div>
+                    {messages.map((msg, i) => {
+                      const cleaned = msg.content.replace(/#{1,6}\s?/g, '').replace(/\*\*/g, '').replace(/\*/g, '').replace(/^>\s?/gm, '').replace(/^-\s/gm, '  \u2022 ');
+                      // Parse [MM:SS] or [M:SS] timestamps into clickable chips
+                      const parts = cleaned.split(/(\[\d{1,2}:\d{2}\])/g);
+                      return (
+                        <div key={i} className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
+                          <div className={`max-w-[85%] p-3 rounded-xl text-sm ${msg.role === 'user' ? 'btn-primary text-white' : ''}`}
+                            style={msg.role === 'assistant' ? { background: 'rgba(148,163,184,0.1)', color: '#e2e8f0', border: '1px solid rgba(148,163,184,0.1)' } : {}}>
+                            <div className="whitespace-pre-wrap leading-relaxed">
+                              {parts.map((part, j) => {
+                                const m = part.match(/^\[(\d{1,2}):(\d{2})\]$/);
+                                if (m && msg.role === 'assistant') {
+                                  const sec = parseInt(m[1]) * 60 + parseInt(m[2]);
+                                  return (
+                                    <button key={j} onClick={() => seekTo(sec)}
+                                      className="inline-flex items-center gap-1 mx-0.5 px-1.5 py-0.5 rounded font-mono text-xs transition hover:scale-105"
+                                      style={{ background: 'rgba(6,182,212,0.2)', color: '#22d3ee', border: '1px solid rgba(6,182,212,0.4)' }}>
+                                      <svg className="w-2.5 h-2.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}><path strokeLinecap="round" strokeLinejoin="round" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" /></svg>
+                                      {part.slice(1, -1)}
+                                    </button>
+                                  );
+                                }
+                                return <span key={j}>{part}</span>;
+                              })}
+                            </div>
+                          </div>
                         </div>
-                      </div>
-                    ))}
+                      );
+                    })}
                     {chatLoading && <div className="flex justify-start"><div className="bg-gray-100 p-3 rounded-xl text-sm text-[var(--text-tertiary)] animate-pulse">{t('chat.thinking')}</div></div>}
                     <div ref={chatEndRef} />
                   </div>

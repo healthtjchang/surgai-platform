@@ -111,7 +111,8 @@ ${videoContext.teachingMaterials.slice(0, 2000)}
 3. 如果問題涉及影片中的特定時間點，請引用相關的逐字稿內容
 4. 如果問題超出影片範圍，可以補充一般性外科知識，但要標明「補充說明」
 5. 鼓勵學員思考，適時反問以促進學習
-6. 使用正確的醫學術語，中英文並列`;
+6. 使用正確的醫學術語，中英文並列
+7. 不要使用 markdown 格式（不要用 ##、**、> 等符號），直接用純文字回答，用換行和數字分段即可`;
 
   const response = await anthropic.messages.create({
     model: 'claude-sonnet-4-20250514',

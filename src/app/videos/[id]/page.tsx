@@ -472,7 +472,7 @@ export default function VideoDetailPage({ params }: { params: Promise<{ id: stri
                       <div key={i} className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
                         <div className={`max-w-[85%] p-3 rounded-xl text-sm ${msg.role === 'user' ? 'btn-primary text-white' : ''}`}
                           style={msg.role === 'assistant' ? { background: 'rgba(148,163,184,0.1)', color: '#e2e8f0', border: '1px solid rgba(148,163,184,0.1)' } : {}}>
-                          <div className="whitespace-pre-wrap leading-relaxed">{msg.content}</div>
+                          <div className="whitespace-pre-wrap leading-relaxed">{msg.content.replace(/#{1,6}\s?/g, '').replace(/\*\*/g, '').replace(/\*/g, '').replace(/^>\s?/gm, '').replace(/^-\s/gm, '  \u2022 ')}</div>
                         </div>
                       </div>
                     ))}

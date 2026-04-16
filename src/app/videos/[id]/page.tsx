@@ -152,7 +152,7 @@ export default function VideoDetailPage({ params }: { params: Promise<{ id: stri
     try {
       const res = await fetch('/api/ai/chat', {
         method: 'POST', headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ videoId: id, message: msg, conversationId }),
+        body: JSON.stringify({ videoId: id, message: msg, conversationId, currentTime }),
       });
       const data = await res.json();
       setMessages(prev => [...prev, { role: 'assistant', content: data.reply }]);
@@ -480,6 +480,13 @@ export default function VideoDetailPage({ params }: { params: Promise<{ id: stri
                     <div ref={chatEndRef} />
                   </div>
                   <div className="border-t p-3">
+                    <div className="flex items-center gap-1.5 mb-2 text-[10px]" style={{ color: 'var(--text-tertiary)' }}>
+                      <svg className="w-3 h-3" style={{ color: 'var(--cyan)' }} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                      </svg>
+                      <span>{isEn ? 'AI context' : 'AI 參考時間點'}：<span style={{ color: 'var(--cyan)' }} className="font-mono">{fmt(currentTime)}</span></span>
+                      <span className="opacity-50">· {isEn ? 'pause video to ask about current frame' : '暫停影片以詢問當前畫面'}</span>
+                    </div>
                     <div className="flex gap-2">
                       <input type="text" value={chatInput} onChange={e => setChatInput(e.target.value)}
                         onKeyDown={e => e.key === 'Enter' && sendMessage()} placeholder={t('chat.placeholder')}

@@ -2,11 +2,17 @@ import { NextRequest, NextResponse } from 'next/server';
 import getDb from '@/lib/db';
 import { verifyPassword, generateToken } from '@/lib/auth';
 
+const ACCESS_CODE = process.env.ACCESS_CODE || '1';
+
 export async function POST(request: NextRequest) {
   try {
-    const { email, password } = await request.json();
+    const { email, password, accessCode } = await request.json();
     if (!email || !password) {
       return NextResponse.json({ error: '請輸入電子郵件和密碼' }, { status: 400 });
+    }
+
+    if (!accessCode || accessCode !== ACCESS_CODE) {
+      return NextResponse.json({ error: '體驗碼錯誤' }, { status: 403 });
     }
 
     const db = getDb();

@@ -11,7 +11,7 @@ export default function RegisterPage() {
   const { locale, t } = useLocale();
   const router = useRouter();
   const isEn = locale === 'en';
-  const [form, setForm] = useState({ email: '', password: '', name: '', role: 'trainee' });
+  const [form, setForm] = useState({ email: '', password: '', name: '', role: 'trainee', accessCode: '' });
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
 
@@ -20,7 +20,7 @@ export default function RegisterPage() {
     setLoading(true);
     setError('');
     try {
-      await register(form.email, form.password, form.name, form.role);
+      await register(form.email, form.password, form.name, form.role, form.accessCode);
       router.push('/dashboard');
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Registration failed');
@@ -114,6 +114,11 @@ export default function RegisterPage() {
                   </button>
                 ))}
               </div>
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-[var(--text-secondary)] mb-1.5">{isEn ? 'Access Code' : '體驗碼'}</label>
+              <input type="text" value={form.accessCode} onChange={e => setForm({ ...form, accessCode: e.target.value })} required
+                className="input" placeholder={isEn ? 'Enter access code' : '請輸入體驗碼'} />
             </div>
             <button type="submit" disabled={loading}
               className="w-full py-3 btn-primary text-sm disabled:opacity-50 disabled:transform-none mt-2">

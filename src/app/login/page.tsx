@@ -13,6 +13,7 @@ export default function LoginPage() {
   const isEn = locale === 'en';
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [accessCode, setAccessCode] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
 
@@ -21,7 +22,7 @@ export default function LoginPage() {
     setLoading(true);
     setError('');
     try {
-      await login(email, password);
+      await login(email, password, accessCode);
       router.push('/dashboard');
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Login failed');
@@ -95,6 +96,11 @@ export default function LoginPage() {
               <label className="block text-sm font-medium text-[var(--text-secondary)] mb-1.5">{t('auth.password')}</label>
               <input type="password" value={password} onChange={e => setPassword(e.target.value)} required
                 className="input" placeholder="********" />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-[var(--text-secondary)] mb-1.5">{isEn ? 'Access Code' : '體驗碼'}</label>
+              <input type="text" value={accessCode} onChange={e => setAccessCode(e.target.value)} required
+                className="input" placeholder={isEn ? 'Enter access code' : '請輸入體驗碼'} />
             </div>
             <button type="submit" disabled={loading}
               className="w-full py-3 btn-primary text-sm disabled:opacity-50 disabled:transform-none">

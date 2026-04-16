@@ -12,8 +12,8 @@ interface User {
 interface AuthContextType {
   user: User | null;
   loading: boolean;
-  login: (email: string, password: string) => Promise<void>;
-  register: (email: string, password: string, name: string, role: string) => Promise<void>;
+  login: (email: string, password: string, accessCode: string) => Promise<void>;
+  register: (email: string, password: string, name: string, role: string, accessCode: string) => Promise<void>;
   logout: () => Promise<void>;
 }
 
@@ -32,11 +32,11 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     }).finally(() => setLoading(false));
   }, []);
 
-  const login = useCallback(async (email: string, password: string) => {
+  const login = useCallback(async (email: string, password: string, accessCode: string) => {
     const res = await fetch('/api/auth/login', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email, password }),
+      body: JSON.stringify({ email, password, accessCode }),
     });
     if (!res.ok) {
       const data = await res.json();
@@ -46,11 +46,11 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     setUser(data.user);
   }, []);
 
-  const register = useCallback(async (email: string, password: string, name: string, role: string) => {
+  const register = useCallback(async (email: string, password: string, name: string, role: string, accessCode: string) => {
     const res = await fetch('/api/auth/register', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email, password, name, role }),
+      body: JSON.stringify({ email, password, name, role, accessCode }),
     });
     if (!res.ok) {
       const data = await res.json();

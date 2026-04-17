@@ -106,10 +106,15 @@ export async function POST(request: NextRequest) {
     }
 
     const db = getDb();
+
+    // Verify user exists in DB (handle case where cookie points to deleted user)
+    const userExists = db.prepare('SELECT id FROM users WHERE id = ?').get(user.id);
+    const surgeonId = userExists ? user.id : null;
+
     db.prepare(`
       INSERT INTO videos (id, title, description, file_path, surgery_type, difficulty, surgeon_id, processing_status, reference_materials, terminology_list, expected_steps)
       VALUES (?, ?, ?, ?, ?, ?, ?, 'pending', ?, ?, ?)
-    `).run(id, title, description, `/uploads/${fileName}`, surgeryType, difficulty, user.id, referenceMaterials, terminologyList, expectedSteps);
+    `).run(id, title, description, `/uploads/${fileName}`, surgeryType, difficulty, surgeonId, referenceMaterials, terminologyList, expectedSteps);
 
     return NextResponse.json({ video: { id, title, processing_status: 'pending' } });
   } catch (error) {
